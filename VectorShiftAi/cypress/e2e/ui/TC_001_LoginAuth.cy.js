@@ -11,8 +11,9 @@ describe('TC_001: Login/Authentication Flow', () => {
     // Step 4: Enter valid password and sign in
     cy.get('input[type="password"]').type('0ZfmSg@123');
     cy.contains('Sign in').click();
-    cy.url().should('include', '/home');
-
+  cy.url({ timeout: 20000 }).should('include', '/home');
+    cy.contains('Home').should('be.visible');
+    cy.contains('Pipelines').should('be.visible');
     // Step 5: Verify dashboard elements
     cy.contains('Welcome to Vectorshift').should('be.visible');
     cy.get('[data-testid="sidebar-navigation"]').should('exist');
@@ -27,3 +28,4 @@ describe('TC_001: Login/Authentication Flow', () => {
     cy.get('[data-testid="protected-content"]').should('not.exist');
   });
 });
+
