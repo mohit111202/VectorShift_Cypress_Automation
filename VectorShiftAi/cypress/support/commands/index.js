@@ -2,15 +2,17 @@
 // Import all custom commands here
 
 // Example: Custom login command
-Cypress.Commands.add('login', (username, password) => {
-  cy.request({
-    method: 'POST',
-    url: '/api/login',
-    body: { username, password }
-  }).then((response) => {
-    window.localStorage.setItem('token', response.body.token);
-  });
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.visit('https://login.vectorshift.ai/'); // Navigate to login page
+  cy.get('input[type="email"]').type(email); // Enter email
+  cy.contains('Continue').click(); // Continue to password step
+  cy.get('input[type="password"]', { timeout: 10000 }).should('be.visible');
+  cy.get('input[type="password"]').type(password); // Enter password
+  cy.contains('Sign in').click(); // Submit login
+  cy.url({ timeout: 10000 }).should('include', '/home');
 });
+
 
 // Example: Custom API command
 Cypress.Commands.add('apiRequest', (method, endpoint, body = {}) => {
@@ -101,4 +103,5 @@ Cypress.Commands.add('restoreLocalStorage', () => {
   Object.keys(LOCAL_STORAGE_MEMORY).forEach((key) => {
     localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
   });
+
 });
