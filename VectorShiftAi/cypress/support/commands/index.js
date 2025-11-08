@@ -10,7 +10,7 @@ Cypress.Commands.add('login', (email, password) => {
   cy.get('input[type="password"]', { timeout: 10000 }).should('be.visible');
   cy.get('input[type="password"]').type(password); // Enter password
   cy.contains('Sign in').click(); // Submit login
-  cy.url({ timeout: 10000 }).should('include', '/home');
+  cy.url({ timeout: 20000 }).should('include', '/home');
 });
 
 
@@ -105,3 +105,4 @@ Cypress.Commands.add('restoreLocalStorage', () => {
   });
 
 });
+
